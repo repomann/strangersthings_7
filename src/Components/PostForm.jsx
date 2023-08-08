@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function GetPost () {
+export default function PostForm () {
 
     return (
         <>
