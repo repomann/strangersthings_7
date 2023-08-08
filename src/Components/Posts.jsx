@@ -26,9 +26,11 @@ function Posts() {
         <h1>Posts</h1>
         {data.map((post)=>(
             <div key={post.id} className="postsSection">
+                <h2>{post.title}</h2>
                 <h2>{post.author.username}</h2>
                 <h2>{post.price}</h2>
                 <h2>{post.location}</h2>
+                <p>{post.description}</p>
             </div>
         ))}
     </div>
