@@ -47,8 +47,35 @@ export default function PostForm () {
             <h2>Add a New Post</h2>
             <label>Title: {""}
                 <input value={title} onChange={(e) => {setTitle(e.target.value);
-                }}></input>
+                }}>
+                </input>
             </label>
+
+            <label>Descripton: {""}
+                <input value={description} onChange={(e) => {setDescription(e.target.value);
+                }}>
+                </input>
+            </label>
+
+            <label>Price: {""}
+                <input value={price} onChange={(e) => {setPrice(e.target.value);
+                }}>
+                </input>
+            </label>
+
+            <label>Location: {""}
+                <input value={location} onChange={(e) => {setLocation(e.target.value);
+                }}>
+                </input>
+            </label>
+
+            <div>
+                <select>
+                    {/* need checkbox for willDeliver here */}
+                </select>
+            </div>
+
+            <button className="create" type="submit">Create</button>
         </form>
         </>
     );
