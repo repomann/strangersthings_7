@@ -45,6 +45,7 @@ export default function PostForm () {
             setPrice();
             setLocation("");
             // return result
+            //show a success message?
             // if (result.error) throw result.error;
         } catch (err) {
             console.error("Oops! Something went wrong. Try again!", err);
