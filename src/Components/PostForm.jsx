@@ -26,6 +26,20 @@ export default function PostForm () {
             });
             const result = await response.json();
             console.log(result);
+
+            //check if the requesting token is the author
+            if (result.data.tokenIsAuthor) {
+                console.log("User is the author");
+            }
+            
+            //check if there are messages for the posted item
+            if (Array.isArray(result.data.message) && result.data.message.length > 0) {
+                console.log("Messages exists:", result.data.message);
+            } else {
+                console.log("No messages for this item");
+            }
+
+            //clear the form inputs after successful submission
             setTitle("");
             setDescription("");
             setPrice();
