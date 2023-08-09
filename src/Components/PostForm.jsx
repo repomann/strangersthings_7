@@ -14,6 +14,7 @@ export default function PostForm () {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
+                    // "Authorization": `Bearer ${token}` //need to fix this Authorization code
                 },
                 body: JSON.stringify({
                     title: title,
