@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import Home from './Components/Home'
 import Login from './Components/Login'
+import PostForm from './Components/PostForm'
 
 import './App.css'
 
