@@ -43,6 +43,13 @@ export default function PostForm () {
 
     return (
         <>
+        <form>
+            <h2>Add a New Post</h2>
+            <label>Title: {""}
+                <input value={title} onChange={(e) => {setTitle(e.target.value);
+                }}></input>
+            </label>
+        </form>
         </>
     );
 }
