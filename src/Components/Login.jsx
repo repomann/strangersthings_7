@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const Login = () =>{
+const ControlledForm = () => {
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
+  const [password, setPassword] = useState(false);
+
+  return <form method="post">
+    
+    </form>
+}
+
+const Login = () => {
+  const handleSubmit = (event) => {
+  event.preventDefault();
+  const form = event.target;
+
+    const formData = new FormData(form);
+    formJson = Object.fromEntries(formData.entries());
+  }
 
   return (
    <form onSubmit={handleSubmit}>
