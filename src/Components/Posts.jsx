@@ -1,6 +1,7 @@
 import COHORTNAME from "../API"
 import { useEffect } from "react"
 import { useState } from "react"
+import MessagesForm from "./MessagesForm"
 
 function Posts() {
     const [data, setData] = useState([])
@@ -31,6 +32,7 @@ function Posts() {
                 <h2>{post.price}</h2>
                 <h2>{post.location}</h2>
                 <p>{post.description}</p>
+                <MessagesForm/>
             </div>
         ))}
     </div>
