@@ -1,0 +1,49 @@
+import { useState } from "react";
+​
+const ControlledForm = () => {
+  const [username, setUsername] = useState('');
+  const [checkbox, setCheckbox] = useState(false);
+  const [radio, setRadio] = useState(false);
+​
+  const handleSubmit = (e) => {
+    e.preventDefault();
+​
+    console.log({ username, checkbox, radio })
+    setUsername('');
+    setCheckbox(false);
+    setRadio(false);
+  }
+​
+  return <form method="post" onSubmit={handleSubmit}>
+    <h3>Controlled Form:</h3>
+​
+    <label>
+      Username:
+      <input value={username} onChange={(e) => setUsername(e.target.value)} />
+    </label>
+​
+    <hr />
+​
+    <label>
+      Checkbox:{" "}
+      <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)} />
+    </label>
+​
+    <hr />
+​
+    <p>
+      Radio buttons:
+      <label>
+        <input type="radio" value={radio} checked={radio} onChange={() => setRadio(!radio)} />
+        Option 1
+      </label>
+    </p>
+​
+    <hr />
+​
+    <button type="reset">Reset form</button>
+    <button type="submit">Submit form</button>
+  </form>
+}
+​
+export default ControlledForm;

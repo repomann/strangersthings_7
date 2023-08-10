@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react';
 
-function Login() {
+const Login = () =>{
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+
   return (
-    <div>Login</div>
+   <form onSubmit={handleSubmit}>
+    <label for="userName">UserName</label>
+    <input type="username" placeholder="username" id="username" name="username"/>
+
+    <label for="password">Password</label>
+    <input type="password" placeholder="**************" id="password" name="password"/>
+
+    <button type="Submit">Submit</button>
+    <button>do not have an account? register here</button>
+   </form>
+  
   )
 }
+
 
 export default Login
