@@ -39,7 +39,7 @@ function Home(Login) {
     
     <div>
       {error && <p>{error} Youre not signed in. No messages available</p>}
-      {isAuthor && <p>{data}</p>}
+      {/* {isAuthor && <p>{data}</p>} */}
         {data.map((me)=>(
           <div key={me._id} className="homeProfile">
             <h2>Welcome {me.username}</h2>
