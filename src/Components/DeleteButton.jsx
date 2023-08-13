@@ -1,7 +1,11 @@
 import React from 'react';
 
 export default function DeleteButton(/*post?*/) {
+
+  // getting the post ID from the current URL
   const {post._id} = useParams();
+
+  
 
   // from API information - below deletePost should delete determine if user is logged in, prior to allowing them to delete.
   const deletePost = async() => {
@@ -19,6 +23,7 @@ export default function DeleteButton(/*post?*/) {
     } catch (err) {
       console.error(err);
   }
+  }
 
 
   return (
@@ -26,7 +31,7 @@ export default function DeleteButton(/*post?*/) {
     // post will be defined once I can get the post component added into the top DeleteButton (post stuff goes here)
     // For each post, the delete handler will need a way to recover the post._id
 
-    // is Author and the result seciont need to be corrected - looks like a syntax error becaues they are in the not defined in the sections needed.
+    // is Author and the result section need to be corrected - looks like a syntax error becaues they are in the not defined in the sections needed.
     <div>
       <h2>{post._id}</h2>
       {isAuthor && <p>{result}</p>}
@@ -34,4 +39,4 @@ export default function DeleteButton(/*post?*/) {
       <button onClick={()=> deletePost(post._id)}></button>
     </div>
   )
-}}
+}
