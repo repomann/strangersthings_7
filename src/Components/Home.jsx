@@ -42,7 +42,11 @@ function Home(Login) {
       {isAuthor && <p>{data}</p>}
         {data.map((me)=>(
           <div key={me._id} className="homeProfile">
-            <h2></h2>
+            <h2>Welcome {me.username}</h2>
+            <h2>Your Posts</h2>
+            <p>{me.posts}</p>
+            <h2>Your Messages</h2>
+            <p>{me.messages}</p>
           </div>
         ))}
       
