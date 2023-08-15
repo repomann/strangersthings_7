@@ -10,7 +10,7 @@ function Home(Login) {
 // API sample GET call for users logged in information
   const [data, setData] = useState([])
   const [error, setError]= useState(null);
-  const isAuthor = TOKEN_STRING_HERE // not sure what to do with isAuthor... I know this is wrong.
+  // const isAuthor = TOKEN_STRING_HERE // not sure what to do with isAuthor... I know this is wrong.
 
   useEffect(() => {   
   async function fetchUserData () {
