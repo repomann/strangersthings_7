@@ -8,7 +8,7 @@ export default function PostForm () {
     const [location, setLocation] =useState(""); //initialize location with an empty string
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
                 method: "POST",
