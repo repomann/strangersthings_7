@@ -1,17 +1,10 @@
 
 import { useState } from 'react';
 
-
-const ControlledForm = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState(false);
 
-  return <form method="post">
-    
-    </form>
-}
-
-const Login = () => {
   const handleSubmit = (event) => {
   event.preventDefault();
   const form = event.target;
@@ -34,6 +27,5 @@ const Login = () => {
   
   )
 }
-
 
 export default Login
