@@ -2,10 +2,10 @@ import COHORTNAME from "../API";
 import { useState } from "react";
 
 export default function PostForm () {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [location, setLocation] =useState("");
+    const [title, setTitle] = useState(""); //initialize title with an empty string
+    const [description, setDescription] = useState(""); //initialize description with an empty string
+    const [price, setPrice] = useState(""); //initialize price with an empty string
+    const [location, setLocation] =useState(""); //initialize location with an empty string
 
     const handleSubmit = async (e) => {
         e.preventDefault();
