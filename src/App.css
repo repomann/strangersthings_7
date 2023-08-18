@@ -1,18 +1,43 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
 
 .postsSection{
   display: flex;
   flex-wrap: wrap;
-  border-radius: 5px;
+  border-radius: 1px;
   background-color: #797979;
   justify-content: space-between;
-  margin: 10px 10px 0px 0px;
-  padding: 15px;
+  margin: 10px 0px 0px 0px;
+  padding: 10px;
+}
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: black;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  background-color: black;
+  border-radius: 12px;
+  margin-top: 25px;
+}
+
+a:hover {
+  background-color: white;
+  color: black;
+  height: 50%;
+  width: 10%;
 }
 
 
