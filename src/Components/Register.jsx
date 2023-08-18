@@ -9,6 +9,8 @@ const Register = () => {
 
     console.log(formJson)
   }
+
+  
   return <form method="post" onSubmit={handleSubmit}>
     <h3>Register:</h3>
 
