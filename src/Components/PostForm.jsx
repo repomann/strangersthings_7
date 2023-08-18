@@ -13,7 +13,8 @@ export default function PostForm () {
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `${}`
                 },
                 body: JSON.stringify({
                     title: title,
