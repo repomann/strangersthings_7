@@ -43,7 +43,7 @@ export default function PostForm () {
             //clear the form inputs after successful submission
             setTitle("");
             setDescription("");
-            setPrice();
+            setPrice("");
             setLocation("");
             setCheckbox(false);
             // return result
