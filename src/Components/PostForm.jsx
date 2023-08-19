@@ -5,9 +5,10 @@ export default function PostForm () {
     const [title, setTitle] = useState(""); //initialize title with an empty string
     const [description, setDescription] = useState(""); //initialize description with an empty string
     const [price, setPrice] = useState(""); //initialize price with an empty string
-    const [location, setLocation] =useState(""); //initialize location with an empty string
+    const [location, setLocation] = useState(""); //initialize location with an empty string
+    const [checkbox, setCheckbox] = useState(false); //initialize checkbox with false, so that it starts unchecked
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
@@ -44,6 +45,7 @@ export default function PostForm () {
             setDescription("");
             setPrice();
             setLocation("");
+            setCheckbox(false);
             // return result
             //show a success message?
             // if (result.error) throw result.error;
@@ -81,10 +83,10 @@ export default function PostForm () {
             </label>
 
             <div>
-                {/* <label>Willing to Deliver?:{""}
-                    <input type="checkbox" checked={true} onChange={(e) => {handle the checkbox change here</label>}}>
+                <label>Willing to Deliver?: 
+                    <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => {setCheckbox(!checkbox)}}>
                     </input>
-                </label> */}
+                </label>
             </div>
 
             <button className="create" type="submit">Create</button>
