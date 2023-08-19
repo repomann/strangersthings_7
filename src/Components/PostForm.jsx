@@ -1,5 +1,6 @@
 import COHORTNAME from "../API";
 import { useState } from "react";
+//pass in the token
 
 export default function PostForm () {
     const [title, setTitle] = useState(""); //initialize title with an empty string
