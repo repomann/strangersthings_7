@@ -40,7 +40,7 @@ export default function PostForm () {
                 console.log("No messages for this item");
             }
 
-            //clear the form inputs after successful submission
+            //clear the form inputs and reset checkbox after successful submission
             setTitle("");
             setDescription("");
             setPrice("");
