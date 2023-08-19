@@ -31,9 +31,13 @@ export default function PostForm () {
             const result = await response.json();
             console.log(result);
 
-            if (result.success) { //show a success message to the user
+            if (result.success) { 
+                //used spread operator to create a new array with the new post added to it, and then set that array as the new state
+                setPosts([...posts, result.data.post]);
+                //show a success message to the user
                 setSuccessMessage("Listing created successfully!");
-            } else { //handle errors returned by the API
+            } else { 
+                //handle errors returned by the API
                 console.error("Oops! Something went wrong on the server.");
             }
             if (result.error) throw result.error; //display error message to the user if needed
