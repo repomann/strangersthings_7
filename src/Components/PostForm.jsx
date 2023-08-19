@@ -7,7 +7,7 @@ export default function PostForm () {
     const [price, setPrice] = useState(""); //initialize price with an empty string
     const [location, setLocation] = useState(""); //initialize location with an empty string
     const [checkbox, setCheckbox] = useState(false); //initialize checkbox with false, so that it starts unchecked
-    const [successMessage, setSuccessMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
 
     const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
@@ -95,6 +95,9 @@ export default function PostForm () {
             </div>
 
             <button className="create" type="submit">Create</button>
+
+            {/* //display success message */}
+            {successMessage && <div className="success">{successMessage}</div>} 
         </form>
         </>
     );
