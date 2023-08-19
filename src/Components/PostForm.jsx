@@ -84,7 +84,7 @@ export default function PostForm () {
 
             <div>
                 <label>Willing to Deliver?: 
-                    <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => {setCheckbox(!checkbox)}}>
+                    <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)}>
                     </input>
                 </label>
             </div>
