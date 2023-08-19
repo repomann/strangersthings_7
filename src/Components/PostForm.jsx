@@ -8,6 +8,7 @@ export default function PostForm () {
     const [location, setLocation] = useState(""); //initialize location with an empty string
     const [checkbox, setCheckbox] = useState(false); //initialize checkbox with false, so that it starts unchecked
     const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
+    const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
 
     const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
@@ -37,6 +38,7 @@ export default function PostForm () {
             if (result.error) throw result.error; //display error message to the user if needed
         } catch (err) {
             console.error("Oops! Something went wrong. Try again!", err);
+            setErrorMessage("Oops! Something went wrong."); //set errorMessage state variable when an error occurs
         }
 
             //check if the requesting token is the author
@@ -98,6 +100,8 @@ export default function PostForm () {
 
             {/* //display success message */}
             {successMessage && <div className="success">{successMessage}</div>} 
+            {/* //display error message */}
+            {errorMessage && <div className="error">{errorMessage}</div>}
         </form>
         </>
     );
