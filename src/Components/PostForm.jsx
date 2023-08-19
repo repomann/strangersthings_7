@@ -22,7 +22,7 @@ export default function PostForm () {
                     description: description,
                     price: price,
                     location: location,
-                    willDeliver: true,
+                    willDeliver: checkbox,
                 }),
             });
             const result = await response.json();
