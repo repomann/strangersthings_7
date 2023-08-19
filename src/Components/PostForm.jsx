@@ -28,6 +28,16 @@ export default function PostForm () {
             const result = await response.json();
             console.log(result);
 
+            if (result.success) { //show a success message to the user
+                setSuccessMessage("Listing created successfully!");
+            } else { //handle errors returned by the API
+                console.error("Oops! Something went wrong on the server.");
+            }
+            if (result.error) throw result.error; //display error message to the user if needed
+        } catch (err) {
+            console.error("Oops! Something went wrong. Try again!", err);
+        }
+
             //check if the requesting token is the author
             if (result.data.tokenIsAuthor) {
                 console.log("User is the author");
@@ -46,12 +56,6 @@ export default function PostForm () {
             setPrice("");
             setLocation("");
             setCheckbox(false);
-            // return result
-            //show a success message?
-            // if (result.error) throw result.error;
-        } catch (err) {
-            console.error("Oops! Something went wrong. Try again!", err);
-        }
     };
 
     return (
