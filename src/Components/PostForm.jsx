@@ -12,7 +12,7 @@ export default function PostForm () {
     const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
     const [posts, setPosts] = useState([]); //initialize posts state with an empty array to store the posts
 
-    const handleSubmit = async (e) => { //should this const be fetchPost
+    const handleSubmit = async (e) => {
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
