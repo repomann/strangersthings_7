@@ -2,39 +2,63 @@ import COHORTNAME from "../API";
 import { useState } from "react";
 
 export default function PostForm () {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [location, setLocation] =useState("");
+    const [title, setTitle] = useState(""); //initialize title with an empty string
+    const [description, setDescription] = useState(""); //initialize description with an empty string
+    const [price, setPrice] = useState(""); //initialize price with an empty string
+    const [location, setLocation] = useState(""); //initialize location with an empty string
+    const [checkbox, setCheckbox] = useState(false); //initialize checkbox with false, so that it starts unchecked
+    const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
+    const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e) => { //should this const be fetchPost
+        e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `${}`
+                    "Authorization": `Bearer ${tokenIsAuthor}`//not sure if the token is correct
                 },
                 body: JSON.stringify({
                     title: title,
                     description: description,
                     price: price,
                     location: location,
-                    willDeliver: true,
+                    willDeliver: checkbox,
                 }),
             });
             const result = await response.json();
             console.log(result);
-            setTitle("");
-            setDescription("");
-            setPrice();
-            setLocation("");
-            // return result
-            // if (result.error) throw result.error;
+
+            if (result.success) { //show a success message to the user
+                setSuccessMessage("Listing created successfully!");
+            } else { //handle errors returned by the API
+                console.error("Oops! Something went wrong on the server.");
+            }
+            if (result.error) throw result.error; //display error message to the user if needed
         } catch (err) {
             console.error("Oops! Something went wrong. Try again!", err);
+            setErrorMessage("Oops! Something went wrong."); //set errorMessage state variable when an error occurs
         }
+
+            //check if the requesting token is the author
+            if (result.data.tokenIsAuthor) {
+                console.log("User is the author");
+            }
+            
+            //check if there are messages for the posted item
+            if (Array.isArray(result.data.message) && result.data.message.length > 0) {
+                console.log("Messages exists:", result.data.message);
+            } else {
+                console.log("No messages for this item");
+            }
+
+            //clear the form inputs and reset checkbox after successful submission
+            setTitle("");
+            setDescription("");
+            setPrice("");
+            setLocation("");
+            setCheckbox(false);
     };
 
     return (
@@ -66,13 +90,18 @@ export default function PostForm () {
             </label>
 
             <div>
-                {/* <label>Willing to Deliver?:{""}
-                    <input type="checkbox" checked={true} onChange={(e) => {handle the checkbox change here</label>}}>
+                <label>Willing to Deliver?: 
+                    <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)}>
                     </input>
-                </label> */}
+                </label>
             </div>
 
             <button className="create" type="submit">Create</button>
+
+            {/* //display success message */}
+            {successMessage && <div className="success">{successMessage}</div>} 
+            {/* //display error message */}
+            {errorMessage && <div className="error">{errorMessage}</div>}
         </form>
         </>
     );
