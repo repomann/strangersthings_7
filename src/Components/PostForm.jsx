@@ -136,6 +136,16 @@ export default function PostForm () {
             ) : (
                 <p> Are you looking to make a post? Please, login.</p>
             )}
+
+            {posts.map((post) => (
+                <div key={post._id}>
+                    <h3>{post.title}</h3>
+                    <p>{post.description}</p>
+                    {isLoggedIn && post.author._id === localStorage.getItem("userId") && (
+                        <button onClick={() => handleDelete(post._id)}>Delete</button>
+                    )}
+                </div>
+            ))}
             {/* //display success message */}
             {successMessage && <div className="success">{successMessage}</div>} 
             {/* //display error message */}
