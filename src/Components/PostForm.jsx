@@ -107,14 +107,14 @@ export default function PostForm () {
         
                     <button className="create" type="submit">Create</button>
         
-                    {/* //display success message */}
-                    {successMessage && <div className="success">{successMessage}</div>} 
-                    {/* //display error message */}
-                    {errorMessage && <div className="error">{errorMessage}</div>}
                 </form>
             ) : (
                 <p> Are you looking to make a post? Please, login.</p>
             )}
+            {/* //display success message */}
+            {successMessage && <div className="success">{successMessage}</div>} 
+            {/* //display error message */}
+            {errorMessage && <div className="error">{errorMessage}</div>}
         </>
     );
 };
