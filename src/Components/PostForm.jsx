@@ -137,7 +137,7 @@ export default function PostForm () {
                 <p> Are you looking to make a post? Please, login.</p>
             )}
 
-            {posts.map((post) => (
+            {posts.map((post) => ( //check if the logged in user's id matches the author's id of each post and if they match render a delete button 
                 <div key={post._id}>
                     <h3>{post.title}</h3>
                     <p>{post.description}</p>
