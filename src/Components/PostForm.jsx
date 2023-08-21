@@ -64,49 +64,53 @@ export default function PostForm () {
     };
 
     const isLoggedIn = !! localStorage.getItem("token");
-    
+
     return (
         <>
-        <form onSubmit={handleSubmit}>
             <h2>Add a New Post</h2>
-            <label>Title: {""}
-                <input value={title} onChange={(e) => {setTitle(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <label>Descripton: {""}
-                <input value={description} onChange={(e) => {setDescription(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <label>Price: {""}
-                <input value={price} onChange={(e) => {setPrice(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <label>Location: {""}
-                <input value={location} onChange={(e) => {setLocation(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <div>
-                <label>Willing to Deliver?: 
-                    <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)}>
-                    </input>
-                </label>
-            </div>
-
-            <button className="create" type="submit">Create</button>
-
-            {/* //display success message */}
-            {successMessage && <div className="success">{successMessage}</div>} 
-            {/* //display error message */}
-            {errorMessage && <div className="error">{errorMessage}</div>}
-        </form>
+            {isLoggedIn ? (
+                <form onSubmit={handleSubmit}>
+                    <label>Title: {""}
+                        <input value={title} onChange={(e) => {setTitle(e.target.value);
+                        }}>
+                        </input>
+                    </label>
+    
+                    <label>Descripton: {""}
+                        <input value={description} onChange={(e) => {setDescription(e.target.value);
+                        }}>
+                        </input>
+                    </label>
+    
+                    <label>Price: {""}
+                        <input value={price} onChange={(e) => {setPrice(e.target.value);
+                        }}>
+                        </input>
+                    </label>
+    
+                    <label>Location: {""}
+                        <input value={location} onChange={(e) => {setLocation(e.target.value);
+                        }}>
+                        </input>
+                    </label>
+        
+                    <div>
+                        <label>Willing to Deliver?: 
+                            <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)}>
+                            </input>
+                        </label>
+                    </div>
+        
+                    <button className="create" type="submit">Create</button>
+        
+                    {/* //display success message */}
+                    {successMessage && <div className="success">{successMessage}</div>} 
+                    {/* //display error message */}
+                    {errorMessage && <div className="error">{errorMessage}</div>}
+                </form>
+            ) : (
+                <p> Are you looking to make a post? Please, login.</p>
+            )}
         </>
     );
-}
+};
