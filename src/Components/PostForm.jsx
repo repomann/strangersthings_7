@@ -1,5 +1,5 @@
 import COHORTNAME from "../API";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function PostForm () {
     const [title, setTitle] = useState(""); //initialize title with an empty string
@@ -9,15 +9,48 @@ export default function PostForm () {
     const [checkbox, setCheckbox] = useState(false); //initialize checkbox with false, so that it starts unchecked
     const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
     const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
+    const [isLoggedIn, setIsLoggedIn] = useState(!! localStorage.getItem("token")); //initialize isLoggedIn
+
+    const fetchPosts = async () => { //fetch posts and store them in the "posts" state
+        try {
+            const response = await  fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts/${postId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                setSuccessMessage("Your listing has been deleted successfully!");
+                //fetch updated posts after deleting a post
+                fetchPosts();
+            } else {
+                console.error("Oops! Something went wrong on the server.");
+            }
+            if (result.error) throw result.error;
+        } catch (err) {
+            console.error("Oops! Something went wrong. Try again!", err);
+            setErrorMessage("Oops! Something went wrong.");
+        }
+    };
 
     const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
+            if (!isLoggedIn) { //if the user is not logged in, show a message and prevent the form from submitting
+                setErrorMessage("Please login to create a post.");
+                return;
+            }
+            const token = localStorage.getItem("tokenIsAuthor")
+            console.log(token)
+
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${tokenIsAuthor}`//not sure if the token is correct
+                    "Authorization": `Bearer ${token}`//not sure if the token is correct
                 },
                 body: JSON.stringify({
                     title: title,
@@ -63,46 +96,60 @@ export default function PostForm () {
 
     return (
         <>
-        <form onSubmit={handleSubmit}>
             <h2>Add a New Post</h2>
-            <label>Title: {""}
-                <input value={title} onChange={(e) => {setTitle(e.target.value);
-                }}>
-                </input>
-            </label>
+            {isLoggedIn ? ( //added ternary statement so that only logged in users can make a post
+                <form onSubmit={handleSubmit}>
+                    <label>Title: {""}
+                        <input value={title} onChange={(e) => {setTitle(e.target.value);
+                        }}>
+                        </input>
+                    </label>
+    
+                    <label>Descripton: {""}
+                        <input value={description} onChange={(e) => {setDescription(e.target.value);
+                        }}>
+                        </input>
+                    </label>
+    
+                    <label>Price: {""}
+                        <input value={price} onChange={(e) => {setPrice(e.target.value);
+                        }}>
+                        </input>
+                    </label>
+    
+                    <label>Location: {""}
+                        <input value={location} onChange={(e) => {setLocation(e.target.value);
+                        }}>
+                        </input>
+                    </label>
+        
+                    <div>
+                        <label>Willing to Deliver?: 
+                            <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)}>
+                            </input>
+                        </label>
+                    </div>
+        
+                    <button className="create" type="submit">Create</button>
+        
+                </form>
+            ) : (
+                <p> Are you looking to make a post? Please, login.</p>
+            )}
 
-            <label>Descripton: {""}
-                <input value={description} onChange={(e) => {setDescription(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <label>Price: {""}
-                <input value={price} onChange={(e) => {setPrice(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <label>Location: {""}
-                <input value={location} onChange={(e) => {setLocation(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <div>
-                <label>Willing to Deliver?: 
-                    <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)}>
-                    </input>
-                </label>
-            </div>
-
-            <button className="create" type="submit">Create</button>
-
+            {posts.map((post) => ( //check if the logged in user's id matches the author's id of each post and if they match render a delete button 
+                <div key={post._id}>
+                    <h3>{post.title}</h3>
+                    <p>{post.description}</p>
+                    {isLoggedIn && post.author._id === localStorage.getItem("userId") && (
+                        <button onClick={() => handleDelete(post._id)}>Delete</button>
+                    )}
+                </div>
+            ))}
             {/* //display success message */}
             {successMessage && <div className="success">{successMessage}</div>} 
             {/* //display error message */}
             {errorMessage && <div className="error">{errorMessage}</div>}
-        </form>
         </>
     );
-}
+};
