@@ -1,6 +1,5 @@
 import COHORTNAME from "../API";
 import { useState } from "react";
-//pass in the token
 
 export default function PostForm () {
     const [title, setTitle] = useState(""); //initialize title with an empty string
@@ -10,11 +9,12 @@ export default function PostForm () {
     const [checkbox, setCheckbox] = useState(false); //initialize checkbox with false, so that it starts unchecked
     const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
     const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
-    const [posts, setPosts] = useState([]); //initialize posts state with an empty array to store the posts
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
+            const token = localStorage.getItem("tokenIsAuthor")
+            console.log(token)
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
                 method: "POST",
                 headers: {
@@ -32,13 +32,9 @@ export default function PostForm () {
             const result = await response.json();
             console.log(result);
 
-            if (result.success) { 
-                //used spread operator to create a new array with the new post added to it, and then set that array as the new state
-                setPosts([...posts, result.data.post]);
-                //show a success message to the user
+            if (result.success) { //show a success message to the user
                 setSuccessMessage("Listing created successfully!");
-            } else { 
-                //handle errors returned by the API
+            } else { //handle errors returned by the API
                 console.error("Oops! Something went wrong on the server.");
             }
             if (result.error) throw result.error; //display error message to the user if needed
@@ -67,6 +63,8 @@ export default function PostForm () {
             setCheckbox(false);
     };
 
+    const isLoggedIn = !! localStorage.getItem("token");
+    
     return (
         <>
         <form onSubmit={handleSubmit}>
