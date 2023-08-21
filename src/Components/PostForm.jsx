@@ -11,6 +11,31 @@ export default function PostForm () {
     const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
     const [isLoggedIn, setIsLoggedIn] = useState(!! localStorage.getItem("token")); //initialize isLoggedIn
 
+    const fetchPosts = async () => { //fetch posts and store them in the "posts" state
+        try {
+            const response = await  fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts/${postId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                setSuccessMessage("Your listing has been deleted successfully!");
+                //fetch updated posts after deleting a post
+                fetchPosts();
+            } else {
+                console.error("Oops! Something went wrong on the server.");
+            }
+            if (result.error) throw result.error;
+        } catch (err) {
+            console.error("Oops! Something went wrong. Try again!", err);
+            setErrorMessage("Oops! Something went wrong.");
+        }
+    };
+
     const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
