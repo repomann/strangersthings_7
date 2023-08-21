@@ -68,7 +68,7 @@ export default function PostForm () {
     return (
         <>
             <h2>Add a New Post</h2>
-            {isLoggedIn ? (
+            {isLoggedIn ? ( //added ternary statement so that only logged in users can make a post
                 <form onSubmit={handleSubmit}>
                     <label>Title: {""}
                         <input value={title} onChange={(e) => {setTitle(e.target.value);
