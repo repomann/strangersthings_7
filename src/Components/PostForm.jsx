@@ -20,12 +20,12 @@ export default function PostForm () {
             }
             const token = localStorage.getItem("tokenIsAuthor")
             console.log(token)
-            
+
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${tokenIsAuthor}`//not sure if the token is correct
+                    "Authorization": `Bearer ${token}`//not sure if the token is correct
                 },
                 body: JSON.stringify({
                     title: title,
