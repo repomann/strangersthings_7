@@ -9,7 +9,7 @@ export default function PostForm () {
     const [checkbox, setCheckbox] = useState(false); //initialize checkbox with false, so that it starts unchecked
     const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
     const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
-    const [isLoggedIn, setIsLoggedIn] = useState(!! localStorage.getItem("token"));
+    const [isLoggedIn, setIsLoggedIn] = useState(!! localStorage.getItem("token")); //initialize isLoggedIn
 
     const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
