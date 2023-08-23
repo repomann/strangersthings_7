@@ -27,6 +27,7 @@ function Posts() {
     <div>
         <h1>Posts</h1>
         <div>
+          {/* //added PostForm so that users have the option to add a new post */}
           <PostForm />
         </div>
         {data.map((post)=>(
