@@ -1,39 +1,57 @@
-
 import { useState } from 'react';
+import { login } from '../API';
 
+const Login = ({setIsLoggedIn, token, setToken}) => {
 
-const ControlledForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(false);
+  const [userName, setuserName] = useState('');
+  const [password, setPassword] = useState('');
 
-  return <form method="post">
-    
-    </form>
-}
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+  try {
+    const response =  await login(userName, password) 
+    if (response.success) {
+      setIsLoggedIn(true)
+      setToken(response.data.token)
+      console.log(response)
+      localStorage.setItem('token', response.data.token)
+    }
 
-const Login = () => {
-  const handleSubmit = (event) => {
-  event.preventDefault();
-  const form = event.target;
-
-    const formData = new FormData(form);
-    formJson = Object.fromEntries(formData.entries());
+  } catch (error) {
+    console.log(error);
   }
+}
 
   return (
-   <form onSubmit={handleSubmit}>
-    <label for="userName">UserName</label>
-    <input type="username" placeholder="username" id="username" name="username"/>
+   <div>
+    <h2>Login</h2>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Username:
+        <input
+        type="text"
+        placeholder="Enter your username"
+        onChange={(event) => setuserName(event.target.value)}
+        required
+         />
+      </label>
+      Password:{" "}
+      <input
+      type="text"
+      placeholder='*************'
+      onChange={(event) => setPassword(event.target.value)}
+      required
+       />
 
-    <label for="password">Password</label>
-    <input type="password" placeholder="**************" id="password" name="password"/>
-
-    <button type="Submit">Submit</button>
-    <button>do not have an account? register here</button>
-   </form>
-  
+      <button
+      type='submit'
+      >submit
+        
+      </button>
+    </form>
+   </div>
   )
 }
-
 
 export default Login

@@ -1,7 +1,7 @@
-import COHORTNAME from "../API"
+import { COHORTNAME } from "../API"
 import { useEffect } from "react"
 import { useState } from "react"
-import MessagesForm from "./MessagesForm"
+  import MessagesForm from "./MessagesForm"
 
 function Posts() {
     const [data, setData] = useState([])
