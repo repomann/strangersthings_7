@@ -9,7 +9,8 @@ function MessagesForm() {
             method: "POST",
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${""}`
+              // token comes from sign up , log in 
+              'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
               message: {
