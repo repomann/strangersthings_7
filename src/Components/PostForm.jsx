@@ -1,5 +1,6 @@
 import { COHORTNAME } from "../API";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function PostForm () {
     const [title, setTitle] = useState(""); //initialize title with an empty string
@@ -10,15 +11,19 @@ export default function PostForm () {
     const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
     const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
     const [seller, setSeller] = useState(""); //initialize seller with an empty string
+ 
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
+            const token = localStorage.getItem("token");
+            console.log(token);
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${tokenIsAuthor}`//not sure if the token is correct
+                    "Authorization": `Bearer ${token}`,
                 },
                 body: JSON.stringify({
                     title: title,
@@ -31,6 +36,8 @@ export default function PostForm () {
             });
             const result = await response.json();
             console.log(result);
+
+            navigate("/posts");
 
             if (result.success) { //show a success message to the user
                 setSuccessMessage("Listing created successfully!");
@@ -105,7 +112,7 @@ export default function PostForm () {
                 </label>
             </div>
 
-            <button className="create" type="submit">Create</button>
+            <button className="create" type="submit">Create Post</button>
 
             {/* //display success message */}
             {successMessage && <div className="success">{successMessage}</div>} 
