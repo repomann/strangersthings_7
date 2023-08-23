@@ -1,14 +1,6 @@
-<<<<<<< HEAD
-import { COHORTNAME } from "../API"
-import { useEffect } from "react"
-import { useState } from "react"
-import MessagesForm from "./MessagesForm"
-import PostForm from "./PostForm";
-=======
 import React, { useState, useEffect } from "react";
 import COHORTNAME from "../API";
 import MessagesForm from "./MessagesForm";
->>>>>>> main
 
 function Posts() {
   const [data, setData] = useState([]);
@@ -40,21 +32,6 @@ function Posts() {
     <>
       <div>
         <h1>Posts</h1>
-<<<<<<< HEAD
-        <div>
-          {/* //added PostForm so that users have the option to add a new post */}
-          <PostForm />
-        </div>
-        {data.map((post)=>(
-            <div key={post.id} className="postsSection">
-                <h2>{post.title}</h2>
-                <h2>{post.author.username}</h2>
-                <h2>{post.price}</h2>
-                <h2>{post.location}</h2>
-                <p>{post.description}</p>
-                <MessagesForm/>
-            </div>
-=======
         {/* Search bar */}
         <input
           type="text"
@@ -71,7 +48,6 @@ function Posts() {
             <p>{post.description}</p>
             <MessagesForm />
           </div>
->>>>>>> main
         ))}
       </div>
     </>
