@@ -36,7 +36,7 @@ export default function PostForm () {
         }
     };
 
-    const handleSubmit = async (e) => { //should this const be fetchPost
+    const handleSubmit = async (e) => {
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
             if (!isLoggedIn) { //if the user is not logged in, show a message and prevent the form from submitting
