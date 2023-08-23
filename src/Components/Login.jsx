@@ -18,7 +18,7 @@ const Login = ({setIsLoggedIn, token, setToken}) => {
       setToken(response.data.token)
       console.log(response)
       localStorage.setItem('token', response.data.token)
-      navigate('/posts')
+      navigate('/posts') //added path to posts, so that browser navigates to the Posts after users are logged in
     }
 
   } catch (error) {
