@@ -57,6 +57,7 @@ export default function PostForm () {
 
             //clear the form inputs and reset checkbox after successful submission
             setTitle("");
+            setSeller("");
             setDescription("");
             setPrice("");
             setLocation("");
