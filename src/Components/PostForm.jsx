@@ -36,6 +36,8 @@ export default function PostForm () {
             });
             const result = await response.json();
             console.log(result);
+            
+            navigate("/posts");
 
             if (result.success) { //show a success message to the user
                 setSuccessMessage("Listing created successfully!");
