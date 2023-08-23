@@ -4,7 +4,6 @@ import Posts from './Components/Posts'
 import { Route, Routes } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import Home from './Components/Home'
-import PostForm from './Components/PostForm'
 import './App.css'
 
 function App() {
