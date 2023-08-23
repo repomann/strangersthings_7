@@ -1,17 +1,26 @@
 import {useState} from "react";
 import { useEffect } from "react";
 import Login from "./Login.jsx"
+import { BASE_URL } from "../API/index.js";
+import { Navigate } from "react-router";
 
 
-// Assuming Login function will be what I need here... other option is TOKEN_STRING_HERE
+// Test Data
+// const mockUser = {
+//   _id: 1, 
+//   username: "Rebekah", 
+//   posts: "this is a test Post", 
+//   messages: "Hi!!!!"
+// };
+
 
 function Home(Login) {
 
-// API sample GET call for users logged in information
   const [data, setData] = useState([])
   const [error, setError]= useState(null);
-  // const isAuthor = TOKEN_STRING_HERE // not sure what to do with isAuthor... I know this is wrong.
-
+  const [isLoggedIn, setIsLoggedIn] = useState(!! localStorage.getItem("token"));
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);  // Testing data
+  
   useEffect(() => {   
   async function fetchUserData () {
 
@@ -19,7 +28,7 @@ function Home(Login) {
       const response = await fetch(`${BASE_URL}/users/me`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${TOKEN_STRING_HERE}`
+          'Authorization': `Bearer ${token}`
         },
       });
       const result = await response.json();
@@ -32,26 +41,48 @@ function Home(Login) {
   }
 
   fetchUserData();
-}, []);
+}, [])
 
 
-  return (
-    
-    <div>
-      {error && <p>{error} Youre not signed in. No messages available</p>}
-      {/* {isAuthor && <p>{data}</p>} */}
-        {data.map((me)=>(
-          <div key={me._id} className="homeProfile">
-            <h2>Welcome {me.username}</h2>
-            <h2>Your Posts</h2>
-            <p>{me.posts}</p>
-            <h2>Your Messages</h2>
-            <p>{me.messages}</p>
+
+useEffect(() => {
+  console.log(data);
+}, [isLoggedIn, data])
+
+return(
+  <div>
+      { isLoggedIn ? (
+          <div>
+              {data.map((me) => {
+                return( 
+                  <div key={me._id} className="homeProfile">
+                  <h2>Welcome {me.username}</h2>
+                  <h2>Your Posts</h2>
+                  <p>{me.posts}</p>
+                  <h2>Your Messages</h2>
+                  <p>{me.messages}</p>
+              </div> 
+                )
+
+              })}
           </div>
-        ))}
-      
-      </div>
-  )
-}
+      )
+          :
+      (
+          <div>
+              <h1>Please login to access your posts and messages, or regiser to create an account.</h1>
+              {/* <button onClick={()=>setIsLoggedIn(true)}>Login</button> TEST BUTTON */}
+              
+              <button onClick={()=> Navigate('/login')}>Login</button>
+
+              <div>
+              <button onClick={()=> Navigate('/register')}>Register</button>
+              </div>
+          </div>
+      )
+  }
+  </div>
+)}
+
 
 export default Home
