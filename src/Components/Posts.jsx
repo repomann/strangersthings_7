@@ -1,7 +1,8 @@
 import { COHORTNAME } from "../API"
 import { useEffect } from "react"
 import { useState } from "react"
-  import MessagesForm from "./MessagesForm"
+import MessagesForm from "./MessagesForm"
+import PostForm from "./PostForm";
 
 function Posts() {
     const [data, setData] = useState([])
@@ -25,6 +26,9 @@ function Posts() {
     <>
     <div>
         <h1>Posts</h1>
+        <div>
+          <PostForm />
+        </div>
         {data.map((post)=>(
             <div key={post.id} className="postsSection">
                 <h2>{post.title}</h2>
