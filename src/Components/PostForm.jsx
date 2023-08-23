@@ -11,6 +11,8 @@ export default function PostForm () {
     const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
     const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
     const [seller, setSeller] = useState(""); //initialize seller with an empty string
+ 
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
