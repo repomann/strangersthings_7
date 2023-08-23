@@ -17,6 +17,8 @@ export default function PostForm () {
     const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
         try {
+            const token = localStorage.getItem("token");
+            console.log(token);
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
                 method: "POST",
                 headers: {
