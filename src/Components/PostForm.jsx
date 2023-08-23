@@ -36,7 +36,7 @@ export default function PostForm () {
             });
             const result = await response.json();
             console.log(result);
-            
+
             navigate("/posts");
 
             if (result.success) { //show a success message to the user
@@ -112,7 +112,7 @@ export default function PostForm () {
                 </label>
             </div>
 
-            <button className="create" type="submit">Create</button>
+            <button className="create" type="submit">Create Post</button>
 
             {/* //display success message */}
             {successMessage && <div className="success">{successMessage}</div>} 
