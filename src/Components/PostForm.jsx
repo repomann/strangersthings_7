@@ -25,6 +25,7 @@ export default function PostForm () {
                     description: description,
                     price: price,
                     location: location,
+                    seller: seller,
                     willDeliver: checkbox,
                 }),
             });
