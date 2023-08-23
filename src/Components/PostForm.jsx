@@ -74,6 +74,11 @@ export default function PostForm () {
                 </input>
             </label>
 
+            <label>Seller: {""}
+                <input value={seller} onChange={(e) => {setSeller(e.target.value);
+                }}></input>
+            </label>
+
             <label>Descripton: {""}
                 <input value={description} onChange={(e) => {setDescription(e.target.value);
                 }}>
