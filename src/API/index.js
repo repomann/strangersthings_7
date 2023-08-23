@@ -1,7 +1,8 @@
-const COHORTNAME = '2302-ACC-CT-WEB-PT-A'
-const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORTNAME}/`
+export const COHORTNAME = '2302-ACC-CT-WEB-PT-A'
+export const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORTNAME}/`
 
-export default async function registerUser (username, password) {
+export async function registerUser (username, password) {
+    console.log(username, password);
     try {
       const response = await fetch(
         `${BASE_URL}/users/register`, {
@@ -26,8 +27,8 @@ export default async function registerUser (username, password) {
     }
   }
 
-  export default async function login (username, password) {
-
+  export async function login (username, password) {
+    console.log(username, password);
     try {
       const response = await fetch(`${BASE_URL}/users/login`, {
         method: "POST",

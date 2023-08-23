@@ -1,4 +1,4 @@
-import COHORTNAME from "../API";
+import { COHORTNAME } from "../API";
 import { useState } from "react";
 
 export default function PostForm () {

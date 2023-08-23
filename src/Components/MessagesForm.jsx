@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import COHORTNAME from "../API";
+import {COHORTNAME} from "../API";
 
 function MessagesForm() {
     let { POST_ID } = useParams()

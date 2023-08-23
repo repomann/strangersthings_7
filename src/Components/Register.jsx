@@ -1,39 +1,63 @@
 import { useState } from 'react';
+import { registerUser } from '../API'
+
 const Register = () => {
-  const handleSubmit = (event) => {
+
+  const [userName, setuserName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (event) => {
+    // makes sure your page does not refresh
     event.preventDefault();
-    const form = event.target;
 
-    const formData = new formData(form);
-    const formJson = Object.fromEntries(formData.entries());
+    try {
+      await registerUser(userName, password)
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+ }
 
-    console.log(formJson)
-  }
+  return ( 
+    <div>
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input 
+          type="text" 
+          placeholder="Enter your username"
+          onChange={(event) => setuserName(event.target.value)}
+          required
+      
+          />
+        </label>
+        <br />
+        <label>
+          Password:{" "}
+          <input 
+          type="text"  
+          placeholder='************'
+          onChange={(event) => setPassword(event.target.value)}
+          required
+           />
+        </label>
 
-  
-  return <form method="post" onSubmit={handleSubmit}>
-    <h3>Register:</h3>
+        <button
+        type='submit'
+        >submit
+          
+        </button>
 
-    <label>
-      Username:
-      <input Name="username" defaultValue={""} />
-    </label>
+        {/* <label>
+          Confirm Password:{" "}
+          <input type="confirmpassword" name="confirmedpassword" value={'confirmedpassword'} />
+        </label> */}
 
-    <hr />
-
-    <label>
-      Password:{" "}
-      <input type="password" name="mypassword" value={'known password'} />
-    </label>
-    
-    <label>
-      Confirm Password:{" "}
-      <input type="confirmpassword" name="confirmedpassword" value={'confirmedpassword'} />
-    </label>
-
-
-  </form>
- 
+        </form>
+    </div>
+  )
 }
 
 export default Register
