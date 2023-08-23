@@ -22,10 +22,10 @@ export default function PostForm () {
                 },
                 body: JSON.stringify({
                     title: title,
+                    seller: seller,
                     description: description,
                     price: price,
                     location: location,
-                    seller: seller,
                     willDeliver: checkbox,
                 }),
             });
