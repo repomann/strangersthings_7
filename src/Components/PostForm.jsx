@@ -9,6 +9,7 @@ export default function PostForm () {
     const [checkbox, setCheckbox] = useState(false); //initialize checkbox with false, so that it starts unchecked
     const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
     const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
+    const [seller, setSeller] = useState(""); //initialize seller with an empty string
 
     const handleSubmit = async (e) => { //should this const be fetchPost
         e.preventDefault(); //request to this endpoint fetches an arrary of post objects
@@ -21,6 +22,7 @@ export default function PostForm () {
                 },
                 body: JSON.stringify({
                     title: title,
+                    seller: seller,
                     description: description,
                     price: price,
                     location: location,
@@ -55,6 +57,7 @@ export default function PostForm () {
 
             //clear the form inputs and reset checkbox after successful submission
             setTitle("");
+            setSeller("");
             setDescription("");
             setPrice("");
             setLocation("");
@@ -67,6 +70,12 @@ export default function PostForm () {
             <h2>Add a New Post</h2>
             <label>Title: {""}
                 <input value={title} onChange={(e) => {setTitle(e.target.value);
+                }}>
+                </input>
+            </label>
+
+            <label>Seller: {""}
+                <input value={seller} onChange={(e) => {setSeller(e.target.value);
                 }}>
                 </input>
             </label>

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { login } from '../API';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({setIsLoggedIn, token, setToken}) => {
+  const navigate = useNavigate();
 
   const [userName, setuserName] = useState('');
   const [password, setPassword] = useState('');
@@ -16,6 +18,7 @@ const Login = ({setIsLoggedIn, token, setToken}) => {
       setToken(response.data.token)
       console.log(response)
       localStorage.setItem('token', response.data.token)
+      navigate('/posts') //added path to posts, so that browser navigates to the Posts after users are logged in
     }
 
   } catch (error) {
