@@ -34,6 +34,7 @@ function Posts() {
       <div>
         <h1>Posts</h1>
         {/* Search bar */}
+        {/* //added PostForm component, so that it renders to the Post page */}
         <div>
           <PostForm />
         </div>
