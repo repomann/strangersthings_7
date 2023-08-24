@@ -19,7 +19,7 @@ export default function PostForm () {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 },
             });
             const result = await response.json();
