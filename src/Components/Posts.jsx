@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import COHORTNAME from "../API";
+import  { useState, useEffect } from "react";
+import { COHORTNAME } from "../API";
 import MessagesForm from "./MessagesForm";
 
 function Posts() {
