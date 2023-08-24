@@ -1,35 +1,120 @@
-import COHORTNAME from "../API";
+import { COHORTNAME } from "../API";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function PostForm () {
     const [title, setTitle] = useState(""); //initialize title with an empty string
     const [description, setDescription] = useState(""); //initialize description with an empty string
+    const [seller, setSeller] = useState(""); //initialize seller with an empty string
     const [price, setPrice] = useState(""); //initialize price with an empty string
     const [location, setLocation] = useState(""); //initialize location with an empty string
     const [checkbox, setCheckbox] = useState(false); //initialize checkbox with false, so that it starts unchecked
     const [successMessage, setSuccessMessage] = useState(""); //initialize successMessage with an empty string
     const [errorMessage, setErrorMessage] = useState(""); //initialize errorMessage with an empty string
-    const [isLoggedIn, setIsLoggedIn] = useState(!! localStorage.getItem("token")); //initialize isLoggedIn
-
+    const [posts, setPosts] = useState([]); //initialize posts with an empty array
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
     const navigate = useNavigate();
 
-    const fetchPosts = async () => { //fetch posts and store them in the "posts" state
+    const fetchPosts = async () => {
         try {
-            const response = await  fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts/${postId}`, {
+            const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`);
+            const result = await response.json();
+            if (result.success) {
+                setPosts(result.data.posts);
+            } else {
+                console.error("Oops! Something went wrong while fetching posts.");
+            }
+        } catch (err) {
+            console.error("Oops! Something went wrong while fetching posts.", err);
+        }
+    };
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const handleSubmit = async (e) => { 
+        e.preventDefault(); //request to this endpoint fetches an arrary of post objects
+        try {
+            if (!isLoggedIn) { //if the user is not logged in, show a message to prevent the form submission
+                setErrorMessage("Please log in to create a post.");
+                return;
+            }
+
+            const token = localStorage.getItem("tokenIsAuthor")
+            console.log(token)
+            const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    title: title,
+                    description: description,
+                    seller: seller,
+                    price: price,
+                    location: location,
+                    willDeliver: checkbox,
+                }),
+            });
+            const result = await response.json();
+            console.log(result);
+            navigate("/posts")
+
+            if (result.success) { //show a success message to the user
+                setSuccessMessage("Listing created successfully!");
+                fetchPosts(); //fetch updated posts after creating a new post
+            } else { //handle errors returned by the API
+                console.error("Oops! Something went wrong on the server.");
+            }
+            if (result.error) throw result.error; //display error message to the user if needed
+        } catch (err) {
+            console.error("Oops! Something went wrong. Try again!", err);
+            setErrorMessage("Oops! Something went wrong."); //set errorMessage state variable when an error occurs
+        }
+
+            //check if the requesting token is the author
+            if (result.data.tokenIsAuthor) {
+                console.log("User is the author");
+            }
+            
+            //check if there are messages for the posted item
+            if (Array.isArray(result.data.message) && result.data.message.length > 0) {
+                console.log("Messages exists:", result.data.message);
+            } else {
+                console.log("No messages for this item");
+            }
+
+            //clear the form inputs and reset checkbox after successful submission
+            setTitle("");
+            setDescription("");
+            setSeller("");
+            setPrice("");
+            setLocation("");
+            setCheckbox(false);
+    };
+
+    const handleDelete = async (postId) => {
+        try {
+            if (!isLoggedIn) {
+                setErrorMessage("Please log in to delete a post.");
+                return;
+            }
+
+            const token = localStorage.getItem("tokenIsAuthor");
+            const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts/${postId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 },
-            });
+            })
+            
             const result = await response.json();
             if (result.success) {
-                setSuccessMessage("Your listing has been deleted successfully!");
-                navigate("/posts");
-                //fetch updated posts after deleting a post
-                fetchPosts();
+                setSuccessMessage("Listing deleted successfully!");
+                fetchPosts(); //fetch updated posts after deleting a post
             } else {
                 console.error("Oops! Something went wrong on the server.");
             }
@@ -39,58 +124,7 @@ export default function PostForm () {
             setErrorMessage("Oops! Something went wrong.");
         }
     };
-    const handleSubmit = async (e) => { //should this const be fetchPost
-        e.preventDefault(); //request to this endpoint fetches an arrary of post objects
-        try {
-            if (!isLoggedIn) { //if the user is not logged in, show a message and prevent the form from submitting
-                setErrorMessage("Please login to create a post.");
-                return;
-            }
-            const token = localStorage.getItem("tokenIsAuthor")
-            console.log(token)
-            const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`//not sure if the token is correct
-                },
-                body: JSON.stringify({
-                    title: title,
-                    description: description,
-                    price: price,
-                    location: location,
-                    willDeliver: checkbox,
-                }),
-            });
-            const result = await response.json();
-            console.log(result);
-            if (result.success) { //show a success message to the user
-                setSuccessMessage("Listing created successfully!");
-            } else { //handle errors returned by the API
-                console.error("Oops! Something went wrong on the server.");
-            }
-            if (result.error) throw result.error; //display error message to the user if needed
-        } catch (err) {
-            console.error("Oops! Something went wrong. Try again!", err);
-            setErrorMessage("Oops! Something went wrong."); //set errorMessage state variable when an error occurs
-        }
-            //check if the requesting token is the author
-            if (result.data.tokenIsAuthor) {
-                console.log("User is the author");
-            }
-            //check if there are messages for the posted item
-            if (Array.isArray(result.data.message) && result.data.message.length > 0) {
-                console.log("Messages exists:", result.data.message);
-            } else {
-                console.log("No messages for this item");
-            }
-            //clear the form inputs and reset checkbox after successful submission
-            setTitle("");
-            setDescription("");
-            setPrice("");
-            setLocation("");
-            setCheckbox(false);
-    };
+
     return (
         <>
             <h2>Add a New Post</h2>
@@ -101,33 +135,45 @@ export default function PostForm () {
                         }}>
                         </input>
                     </label>
+    
                     <label>Descripton: {""}
                         <input value={description} onChange={(e) => {setDescription(e.target.value);
                         }}>
                         </input>
                     </label>
+                    
+                    <label>Seller: {""}
+                        <input value={seller} onChange={(e) => {setSeller(e.target.value);
+                        }}>
+                        </input>
+                    </label>
+    
                     <label>Price: {""}
                         <input value={price} onChange={(e) => {setPrice(e.target.value);
                         }}>
                         </input>
                     </label>
+    
                     <label>Location: {""}
                         <input value={location} onChange={(e) => {setLocation(e.target.value);
                         }}>
                         </input>
                     </label>
+        
                     <div>
-                        <label>Willing to Deliver?:
+                        <label>Willing to Deliver?: 
                             <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)}>
                             </input>
                         </label>
                     </div>
+        
                     <button className="create" type="submit">Create</button>
                 </form>
             ) : (
                 <p> Are you looking to make a post? Please, login.</p>
             )}
-            {posts.map((post) => ( //check if the logged in user's id matches the author's id of each post and if they match render a delete button
+
+            {posts.map((post) => (
                 <div key={post._id}>
                     <h3>{post.title}</h3>
                     <p>{post.description}</p>
@@ -136,10 +182,12 @@ export default function PostForm () {
                     )}
                 </div>
             ))}
+            
             {/* //display success message */}
-            {successMessage && <div className="success">{successMessage}</div>}
+            {successMessage && <div className="success">{successMessage}</div>} 
             {/* //display error message */}
             {errorMessage && <div className="error">{errorMessage}</div>}
         </>
     );
 };
+
