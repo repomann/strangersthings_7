@@ -122,6 +122,7 @@ export default function PostForm () {
                 console.error("Oops! Something went wrong on the server.");
             }
             if (result.error) throw result.error;
+            
         } catch (err) {
             console.error("Oops! Something went wrong. Try again!", err);
             setErrorMessage("Oops! Something went wrong.");
