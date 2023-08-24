@@ -2,8 +2,6 @@ import COHORTNAME from "../API";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const navigate = useNavigate();
-
 export default function PostForm () {
     const [title, setTitle] = useState(""); //initialize title with an empty string
     const [description, setDescription] = useState(""); //initialize description with an empty string
@@ -71,50 +69,53 @@ export default function PostForm () {
     };
     return (
         <>
-            <h2>Add a New Post</h2>
-            <label>Title: {""}
-                <input value={title} onChange={(e) => {setTitle(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <label>Seller: {""}
-                <input value={seller} onChange={(e) => {setSeller(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <label>Descripton: {""}
-                <input value={description} onChange={(e) => {setDescription(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <label>Price: {""}
-                <input value={price} onChange={(e) => {setPrice(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <label>Location: {""}
-                <input value={location} onChange={(e) => {setLocation(e.target.value);
-                }}>
-                </input>
-            </label>
-
-            <div>
-                <label>Willing to Deliver?: 
-                    <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)}>
+        <h2>Add a New Post</h2>
+        {isLoggedIn ? ( //added ternary statement so that only logged in users can make a post
+            <form onSubmit={handleSubmit}>
+                <label>Title: {""}
+                    <input value={title} onChange={(e) => {setTitle(e.target.value);
+                    }}>
                     </input>
                 </label>
+                <label>Descripton: {""}
+                    <input value={description} onChange={(e) => {setDescription(e.target.value);
+                    }}>
+                    </input>
+                </label>
+                <label>Price: {""}
+                    <input value={price} onChange={(e) => {setPrice(e.target.value);
+                    }}>
+                    </input>
+                </label>
+                <label>Location: {""}
+                    <input value={location} onChange={(e) => {setLocation(e.target.value);
+                    }}>
+                    </input>
+                </label>
+                <div>
+                    <label>Willing to Deliver?:
+                        <input type="checkbox" value={checkbox} checked={checkbox} onChange={() => setCheckbox(!checkbox)}>
+                        </input>
+                    </label>
+                </div>
+                <button className="create" type="submit">Create</button>
+            </form>
+        ) : (
+            <p> Are you looking to make a post? Please, login.</p>
+        )}
+        {posts.map((post) => ( //check if the logged in user's id matches the author's id of each post and if they match render a delete button
+            <div key={post._id}>
+                <h3>{post.title}</h3>
+                <p>{post.description}</p>
+                {isLoggedIn && post.author._id === localStorage.getItem("userId") && (
+                    <button onClick={() => handleDelete(post._id)}>Delete</button>
+                )}
             </div>
-
-            <button className="create" type="submit">Create Post</button>
-
-            {/* //display success message */}
-            {successMessage && <div className="success">{successMessage}</div>}
-            {/* //display error message */}
-            {errorMessage && <div className="error">{errorMessage}</div>}
-        </>
-    );
+        ))}
+        {/* //display success message */}
+        {successMessage && <div className="success">{successMessage}</div>}
+        {/* //display error message */}
+        {errorMessage && <div className="error">{errorMessage}</div>}
+    </>
+);
 };
