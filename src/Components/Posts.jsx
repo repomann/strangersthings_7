@@ -1,6 +1,7 @@
 import  { useState, useEffect } from "react";
 import { COHORTNAME } from "../API";
 import MessagesForm from "./MessagesForm";
+import PostForm from "./PostForm";
 
 function Posts() {
   const [data, setData] = useState([]);
@@ -33,6 +34,10 @@ function Posts() {
       <div>
         <h1>Posts</h1>
         {/* Search bar */}
+        {/* //added PostForm component, so that it renders to the Post page */}
+        <div>
+          <PostForm />
+        </div>
         <input
           type="text"
           placeholder="Search by title"
