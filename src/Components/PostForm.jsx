@@ -41,7 +41,7 @@ export default function PostForm () {
                 return;
             }
 
-            const token = localStorage.getItem("tokenIsAuthor")
+            const token = localStorage.getItem("token")
             console.log(token)
             const response = await fetch(`https://strangers-things.herokuapp.com/api/${COHORTNAME}/posts`, {
                 method: "POST",
@@ -50,13 +50,14 @@ export default function PostForm () {
                     Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
+                    post:{
                     title: title,
                     description: description,
                     seller: seller,
                     price: price,
                     location: location,
                     willDeliver: checkbox,
-                }),
+                }}),
             });
             const result = await response.json();
             console.log(result);
@@ -69,23 +70,19 @@ export default function PostForm () {
                 console.error("Oops! Something went wrong on the server.");
             }
             if (result.error) throw result.error; //display error message to the user if needed
-        } catch (err) {
-            console.error("Oops! Something went wrong. Try again!", err);
-            setErrorMessage("Oops! Something went wrong."); //set errorMessage state variable when an error occurs
-        }
 
             //check if the requesting token is the author
             if (result.data.tokenIsAuthor) {
                 console.log("User is the author");
             }
-            
+                        
             //check if there are messages for the posted item
             if (Array.isArray(result.data.message) && result.data.message.length > 0) {
                 console.log("Messages exists:", result.data.message);
             } else {
                 console.log("No messages for this item");
             }
-
+            
             //clear the form inputs and reset checkbox after successful submission
             setTitle("");
             setDescription("");
@@ -93,6 +90,12 @@ export default function PostForm () {
             setPrice("");
             setLocation("");
             setCheckbox(false);
+        } catch (err) {
+            console.error("Oops! Something went wrong. Try again!", err);
+            setErrorMessage("Oops! Something went wrong."); //set errorMessage state variable when an error occurs
+        }
+
+
     };
 
     const handleDelete = async (postId) => {
@@ -119,6 +122,7 @@ export default function PostForm () {
                 console.error("Oops! Something went wrong on the server.");
             }
             if (result.error) throw result.error;
+            
         } catch (err) {
             console.error("Oops! Something went wrong. Try again!", err);
             setErrorMessage("Oops! Something went wrong.");
